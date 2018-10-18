@@ -4,11 +4,21 @@
   "description": "Javascript based mica parser",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "babel src/ -d lib/",
+    "prepublish": "yarn run build"
   },
   "author": "C. Cheney",
   "license": "MIT",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "flow-bin": "^0.83.0",
     "jest": "^23.6.0"
+  },
+  "jest": {
+    "testPathIgnorePatterns" : ["./lib/"]
   }
 }
