@@ -39,4 +39,8 @@ export function commandToModule(cmd: number): moduleName_T {
     return 'unknown';
 }
 
+export function processRxByte(rxByte: number)  {
+
+}
+
 /* [] - END OF FILE */

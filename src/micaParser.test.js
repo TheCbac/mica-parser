@@ -43,3 +43,5 @@ test('Energy command', () => {
     expect(commandToModule(0xEB)).toBe('energy');
     expect(commandToModule(0xFF)).toBe('energy');
 });
+
+/* [] - END OF FILE */

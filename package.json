@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "build": "babel src/ -d lib/",
-    "prepublish": "yarn run build"
+    "prepublish": "yarn run build",
+    "clean": "rimraf ./node_modules/ yarn.lock"
   },
   "author": "C. Cheney",
   "license": "MIT",
