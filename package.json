@@ -1,0 +1,14 @@
+{
+  "name": "mica-parser",
+  "version": "1.0.0",
+  "description": "Javascript based mica parser",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "C. Cheney",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
+}
