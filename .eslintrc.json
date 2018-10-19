@@ -1,0 +1,30 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
+  },
+  "extends": [
+      "airbnb-base",
+      "plugin:jest/recommended"
+  ],
+  "plugins": [
+      "Jest",
+      "flowtype",
+      "flowtype-errors",
+      "import"
+  ],
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "webpack.config.eslint.js"
+      }
+    }
+  },
+  "rules": {
+    "no-bitwise": "off",
+    "camelcase": "off",
+    "no-plusplus": "off",
+    "comma-dangle": ["error", {"functions": "never"}]
+  }
+}

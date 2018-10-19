@@ -18,18 +18,18 @@ export type usbPort = {
 let openPort: ?usbPort = null;
 
 export function setPort(port: usbPort): void {
-    openPort = port;
+  openPort = port;
 }
 
 export function removePort(): void {
-    openPort = null;
+  openPort = null;
 }
 
 export function isPortOpen(): boolean {
-    return openPort && openPort.isOpen ? true : false;
+  return !!(openPort && openPort.isOpen);
 }
 
 export function getPort(): ?usbPort {
-    return openPort;
+  return openPort;
 }
 /* [] - END OF FILE */

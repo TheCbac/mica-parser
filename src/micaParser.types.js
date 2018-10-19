@@ -38,7 +38,7 @@ export type packetObj_T = {
     cmd: number,
     payload: number[],
     flags: number,
-    
+
 }
 
 export type bufferResponse_T = {
@@ -50,5 +50,11 @@ export type bufferResponse_T = {
 export type constructResponse_T = {
     err: string,
     success: boolean
+}
+
+export type parsePacketResponse_T = {
+    err: string,
+    success: boolean,
+    packet: ?packetObj_T
 }
 /* [] - END OF FILE */

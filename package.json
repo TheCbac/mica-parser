@@ -5,17 +5,27 @@
   "main": "src/micaUsb.js",
   "scripts": {
     "test": "jest",
+    "test-changed": "jest --onlyChanged",
     "build": "babel src/ -d lib/",
     "prepublish": "yarn run build",
-    "clean": "rimraf ./node_modules/ yarn.lock"
+    "clean": "rimraf ./node_modules/ yarn.lock",
+    "lint-fix": "npx eslint --fix ./src/"
   },
   "author": "C. Cheney",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.0.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-2": "^6.24.1",
+    "eslint": "^5.7.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-import-resolver-webpack": "^0.10.1",
+    "eslint-plugin-flowtype": "^3.0.0",
+    "eslint-plugin-flowtype-errors": "^3.6.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^21.25.1",
     "flow-bin": "^0.83.0",
     "jest": "^23.6.0"
   },
