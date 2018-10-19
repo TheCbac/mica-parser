@@ -49,7 +49,8 @@ export type bufferResponse_T = {
 
 export type constructResponse_T = {
     err: string,
-    success: boolean
+    success: boolean,
+    packet: ?number[]
 }
 
 export type parsePacketResponse_T = {

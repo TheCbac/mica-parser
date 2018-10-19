@@ -72,39 +72,34 @@ export function commandToModule(cmd: number): moduleName_T {
 export function constructPacket(inPacket: packetObj_T): constructResponse_T {
   const result = {
     success: true,
-    err: ''
+    err: '',
+    packet: null
   };
-    /* Ensure payload size is valid */
+  const buffer = [];
+  /* Ensure payload size is valid */
   if (inPacket.payload.length >= packets.LEN_MAX_PAYLOAD) {
     result.success = false;
     result.err = 'Payload exceeds maximum length';
     return result;
   }
-  /* Ensure TX buffer is ready to send */
-  if (txBuffer.state !== 'wait') {
-    result.success = false;
-    result.err = 'TX buffer is in an invalid state';
-    return result;
-  }
-  /* Pack the buffer */
-  txBuffer.buffer.push(packets.SYM_START);
-  txBuffer.buffer.push(inPacket.cmd);
-  /* Payload MSB/LSB */
-  txBuffer.buffer.push((inPacket.payload.length >> 8) & 0xFF);
-  txBuffer.buffer.push(inPacket.payload.length & 0xFF);
-  /* Payload */
-  txBuffer.buffer.push(...inPacket.payload);
-  /* Flags */
-  txBuffer.buffer.push((inPacket.flags >> 8) & 0xFF);
-  txBuffer.buffer.push((inPacket.flags) & 0xFF);
-  /* Calculate checksum */
-  const { msb, lsb } = computeChecksum16(txBuffer.buffer);
-  txBuffer.buffer.push(msb, lsb);
-  /* End symbol */
-  txBuffer.buffer.push(packets.SYM_END);
-  /* Advance to next state */
-  txBuffer.state = 'ready';
 
+  /* Pack the buffer */
+  buffer.push(packets.SYM_START);
+  buffer.push(inPacket.cmd);
+  /* Payload MSB/LSB */
+  buffer.push((inPacket.payload.length >> 8) & 0xFF);
+  buffer.push(inPacket.payload.length & 0xFF);
+  /* Payload */
+  buffer.push(...inPacket.payload);
+  /* Flags */
+  buffer.push((inPacket.flags >> 8) & 0xFF);
+  buffer.push((inPacket.flags) & 0xFF);
+  /* Calculate checksum */
+  const { msb, lsb } = computeChecksum16(buffer);
+  buffer.push(msb, lsb);
+  /* End symbol */
+  buffer.push(packets.SYM_END);
+  result.packet = buffer;
   return result;
 }
 
@@ -122,12 +117,12 @@ export function resetRxBuffer(): void {
   rxBuffer.payloadLen = 0;
 }
 
-/* Get the packed data from the tx buffer, and then clear the buffer */
-export function getTxBuffer(): number[] {
-  const packetData = txBuffer.buffer.slice();
-  resetTxBuffer();
-  return packetData;
-}
+// /* Get the packed data from the tx buffer, and then clear the buffer */
+// export function getTxBuffer(): number[] {
+//   const packetData = txBuffer.buffer.slice();
+//   resetTxBuffer();
+//   return packetData;
+// }
 
 /* Process one byte of the received packet */
 export function processRxByte(byte: number): bufferResponse_T {

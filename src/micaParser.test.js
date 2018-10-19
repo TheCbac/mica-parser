@@ -132,9 +132,9 @@ describe('processRxByte', () => {
 });
 
 describe('constructPacket', () => {
-  beforeEach(() => {
-    resetTxBuffer();
-  });
+  // beforeEach(() => {
+  //   resetTxBuffer();
+  // });
   test('Basic packet', () => {
     const packet = {
       module: 'control',
@@ -142,7 +142,11 @@ describe('constructPacket', () => {
       payload: [],
       flags: 0x00
     };
-    expect(constructPacket(packet)).toEqual({ success: true, err: '' });
+    expect(constructPacket(packet)).toEqual({
+      success: true,
+      err: '',
+      packet: [0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xAA]
+    });
   });
   test('Double creation', () => {
     const packet = {
@@ -151,19 +155,16 @@ describe('constructPacket', () => {
       payload: [],
       flags: 0x00
     };
-    expect(constructPacket(packet)).toEqual({ success: true, err: '' });
-    expect(constructPacket(packet)).toEqual({ success: false, err: 'TX buffer is in an invalid state' });
-  });
-  test('Basic packet - check content', () => {
-    const packet = {
-      module: 'control',
-      cmd: 0x00,
-      payload: [],
-      flags: 0x00
-    };
-    expect(constructPacket(packet)).toEqual({ success: true, err: '' });
-    /* get the content */
-    expect(getTxBuffer()).toEqual([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xAA]);
+    expect(constructPacket(packet)).toEqual({
+      success: true,
+      err: '',
+      packet: [0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xAA]
+    });
+    expect(constructPacket(packet)).toEqual({
+      success: true,
+      err: '',
+      packet: [0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xAA]
+    });
   });
   test('Too long payload', () => {
     const packet = {
@@ -175,7 +176,7 @@ describe('constructPacket', () => {
     for (let i = 0; i < 1000; i++) {
       packet.payload.push(i);
     }
-    expect(constructPacket(packet)).toEqual({ success: false, err: 'Payload exceeds maximum length' });
+    expect(constructPacket(packet)).toEqual({ success: false, err: 'Payload exceeds maximum length', packet: null });
   });
   test('Payload', () => {
     const packet = {
@@ -184,11 +185,7 @@ describe('constructPacket', () => {
       payload: [0xFF, 0xFF],
       flags: 0x00
     };
-    expect(constructPacket(packet)).toEqual({ success: true, err: '' });
-    /* get the content */
-    expect(getTxBuffer()).toEqual(
-      [0x01, 0x10, 0x00, 0x02, 0xFF, 0xFF, 0x00, 0x00, 0xFD, 0xEF, 0xAA]
-    );
+    expect(constructPacket(packet)).toEqual({ success: true, err: '', packet: [0x01, 0x10, 0x00, 0x02, 0xFF, 0xFF, 0x00, 0x00, 0xFD, 0xEF, 0xAA] });
   });
 });
 
