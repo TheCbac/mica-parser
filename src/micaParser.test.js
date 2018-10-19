@@ -148,6 +148,16 @@ describe('constructPacket', () => {
         };
         expect(constructPacket(packet)).toEqual({ success: true, err: '' });
     });
+    test('Double creation', () => {
+        const packet = {
+            module: 'control',
+            cmd: 0x00,
+            payload: [],
+            flags: 0x00
+        };
+        expect(constructPacket(packet)).toEqual({ success: true, err: '' });
+        expect(constructPacket(packet)).toEqual({ success: true, err: '' });
+    });
     test('Basic packet - check content', () => {
         const packet = {
             module: 'control',
