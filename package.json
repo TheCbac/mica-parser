@@ -1,8 +1,8 @@
 {
-  "name": "mica-parser",
+  "name": "micaUsb",
   "version": "1.0.0",
-  "description": "Javascript based mica parser",
-  "main": "index.js",
+  "description": "Javascript based mica parser and USB connection",
+  "main": "src/micaUsb.js",
   "scripts": {
     "test": "jest",
     "build": "babel src/ -d lib/",
@@ -20,6 +20,8 @@
     "jest": "^23.6.0"
   },
   "jest": {
-    "testPathIgnorePatterns" : ["./lib/"]
+    "testPathIgnorePatterns": [
+      "./lib/"
+    ]
   }
 }

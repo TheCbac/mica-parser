@@ -3,3 +3,4 @@ node_modules/
 *.o
 build/
 lib/
+package-lock.json

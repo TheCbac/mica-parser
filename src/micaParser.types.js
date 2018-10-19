@@ -9,5 +9,33 @@
 ********************************************************* */
 
 export type moduleName_T = 'energy' | 'actuation' | 'sensing' | 'control' | 'unknown';
+export type packetData_T = number[] | Buffer;
 
+export type packet_T = {
+    module: moduleName_T,
+    cmd: number,
+    payload: number[],
+    flags: number
+};
+
+export type bufferStateSend_T = 'wait' | 'ready' | 'queueing' | 'complete';
+export type bufferStateReceive_T = 'wait' | 'header' | 'payload' | 'footer' | 'complete';
+
+export type rxBufferObj_T = {
+    buffer: number[],
+    state: bufferStateReceive_T,
+    payloadLen: number
+}
+
+export type txBufferObj_T = {
+    buffer: number[],
+    state: bufferStateSend_T,
+    payloadLen: number
+}
+
+export type bufferResponse_T = {
+    complete: boolean,
+    err: string,
+    success: boolean
+}
 /* [] - END OF FILE */
