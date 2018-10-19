@@ -33,8 +33,21 @@ export type txBufferObj_T = {
     payloadLen: number
 }
 
+export type packetObj_T = {
+    module: moduleName_T,
+    cmd: number,
+    payload: number[],
+    flags: number,
+    
+}
+
 export type bufferResponse_T = {
     complete: boolean,
+    err: string,
+    success: boolean
+}
+
+export type constructResponse_T = {
     err: string,
     success: boolean
 }

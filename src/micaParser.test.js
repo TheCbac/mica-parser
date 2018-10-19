@@ -10,7 +10,10 @@ import {
     commandToModule,
     computeChecksum16,
     processRxByte,
-    resetRxBuffer
+    resetRxBuffer,
+    resetTxBuffer,
+    constructPacket,
+    getTxBuffer
 } from './micaParser';
 
 describe('Command to module', () => {
@@ -129,6 +132,32 @@ describe('processRxByte', () => {
         /* Process additional byte */
         expect(processRxByte(0x01)).toEqual({ complete: true, success: false, err: 'Completed packet has not been handled yet'});
         
+    });
+});
+
+describe('constructPacket', () => {
+    beforeEach(() => {
+        resetTxBuffer();
+    });
+    test('Basic packet', () => {
+        const packet = {
+            module: 'control',
+            cmd: 0x00,
+            payload: [],
+            flags: 0x00
+        };
+        expect(constructPacket(packet)).toEqual({ success: true, err: '' });
+    });
+    test('Basic packet - check content', () => {
+        const packet = {
+            module: 'control',
+            cmd: 0x00,
+            payload: [],
+            flags: 0x00
+        };
+        expect(constructPacket(packet)).toEqual({ success: true, err: '' });
+        /* get the content */
+        expect(getTxBuffer()).toEqual([0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xAA]);
     });
 });
 
